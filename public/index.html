@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="" href="main.css">
+    <title>Node JS server and chat</title>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <div class="container">
+        <ul class="messages-list">
+            <li class="message">Xyi</li>
+        </ul>
+        <textarea name="" id="" rows="10" class="textarea"></textarea>
+        <button class="btn btn-send">Send</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js">
+    </script>
+    <script>
+        var socket = io('http://localhost:3000/');
+
+        document.querySelector('.btn-send')
+            .addEventListener('click', ev => {
+                ev.preventDefault();
+                let text = document.querySelector('.textarea').value;
+                socket.emit('message', text);
+
+                socket.on('new message', function(data) {
+                    let li = document.createElement('li');
+                    li.textContent = data;
+                    li.classList.add = 'message';
+
+                    document.querySelector('.messages-list')
+                        .appendChild(li);
+
+                    document.querySelector('.textarea').value = '';
+
+                })
+            })
+    </script>
+</body>
+
+</html>
